@@ -1,0 +1,59 @@
+package hellojpa;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import java.util.List;
+
+public class JpaMain {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
+
+        EntityManager em = emf.createEntityManager();   // 관리자 만들기.
+        // 아래부터 이제 DB와의 코드작업
+
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        try{
+//            회원등록기능
+//            Member member1 = new Member();
+//            member1.setId(1L);
+//            member1.setName("HelloA");
+//            em.persist(member1);
+//
+//            Member member2 = new Member();
+//            member2.setId(2L);
+//            member2.setName("HelloB");
+//            em.persist(member2);
+
+            Member findmember = em.find(Member.class, 1L);
+////            조회해보기
+//            System.out.println("findmember.getId() = " + findmember.getId());
+//            System.out.println("findmember.getName() = " + findmember.getName());
+
+//            찾은 대상을 삭제-db에서 삭제됨 delete query
+//            em.remove(findmember);
+
+//            수정하기
+//            findmember.setName("HelloJPA");
+
+////            JPQL 써보기
+            List<Member> result = em.createQuery("select m from Member as m", Member.class)
+//                    .setFirstResult(5)
+//                    .setMaxResults(8)
+                    .getResultList();
+            for( Member member : result){
+                System.out.println("member.Name = " + member.getName());
+            }
+
+            tx.commit();
+        } catch (Exception e){
+            tx.rollback();
+        } finally{
+            em.close();
+        }
+
+       emf.close();
+    }
+}

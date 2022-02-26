@@ -1,0 +1,12 @@
+1. jpashop mv.db가 이미 홈에 만들어져 있었음
+2. 새공부를 할수 있는 test.mv.db를 따로 만들고 싶었음.
+
+참고 : h2 기본 db 이외의 db 쓰는법
+https://sogno-ing.tistory.com/169
+
+위 블로그대로 하여 
+C:\Users\kimkyuha\Desktop\jpa\H2\bin 에 test.mv.db 생성완료
+
+H2.bat을 실행 후, url에 jdbc:h2:tcp://localhost/./test 입력하면 다른 경로로도 접속가능
+
+persistence.xml 에서 경로를 수정해 주어야 한다. <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/./test"/>
