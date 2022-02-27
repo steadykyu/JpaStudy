@@ -7,6 +7,7 @@ https://sogno-ing.tistory.com/169
 위 블로그대로 하여 
 C:\Users\kimkyuha\Desktop\jpa\H2\bin 에 test.mv.db 생성완료
 
-H2.bat을 실행 후, url에 jdbc:h2:tcp://localhost/./test 입력하면 다른 경로로도 접속가능
+H2.bat을 실행 후, url에 jdbc:h2:tcp://localhost/./test 입력하면 bin 폴더에서 찾아서 연결
+~/test 시 홈디렉토리(사용자) 에 DB를 만들고 연결함.
 
 persistence.xml 에서 경로를 수정해 주어야 한다. <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/./test"/>
