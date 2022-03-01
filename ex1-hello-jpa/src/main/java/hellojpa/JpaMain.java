@@ -11,14 +11,41 @@ public class JpaMain {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 
         EntityManager em = emf.createEntityManager();
-        // 관리자를 새로 만들기.(아래 코드입장에서는 계속 em과 트랜잭션이 새로 만들어 지는 것이다.)
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-        Member member1 = new Member();
+            Team team = new Team();
+            team.setName("TeamA");
+//            team.getMembers().add(member);      // members에 member추가
+            em.persist(team);
 
-        em.persist(member1);
-        tx.commit();
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team);                   // 주인에다 값을 넣어보자.
+//            member.changeTeam(team);
+            em.persist(member);
+
+//            team.addMember(member);
+//            team.getMembers().add(member);      // 둘다 넣는다면?
+//            em.flush();
+//            em.clear();
+
+            Team findTeam = em.find(Team.class, team.getId());
+            List<Member> members = findTeam.getMembers();
+            System.out.println("==========");
+            for(Member m : members){
+                System.out.println("m = "+ m.getUsername());
+            }
+//            System.out.println("findTeam = " + findTeam);// 무한루프 발생
+            System.out.println("==========");
+//
+//            Member findMember = em.find(Member.class, member.getId());
+//            List<Member> members = findMember.getTeam().getMembers();
+//            for(Member m : members){
+//                System.out.println("m = "+ m.getUsername());
+//            }
+
+            tx.commit();
 
         } catch (Exception e){
             tx.rollback();
