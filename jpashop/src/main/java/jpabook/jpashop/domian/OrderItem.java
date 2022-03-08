@@ -9,11 +9,11 @@ public class OrderItem extends BaseEntity{
     @Column(name = "ORDER_ITEM_ID")
     private  Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ORDER_ID")
     private Order order;        // Order 와 fK 용 객체 생성
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ITEM_ID") // ITEM 와 fK 용 객체 생성
     private Item item;
 

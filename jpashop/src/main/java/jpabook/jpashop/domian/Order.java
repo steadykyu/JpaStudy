@@ -16,15 +16,15 @@ public class Order extends BaseEntity{
 //    @Column(name = "MEMBER_ID")
 //    private Long memberId;            // 이전에 외래키로 직접가진 상태로 매핑하던 방식 fk
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;              // 객체지향적이기 위해 Member추가.
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "DELIVERY_ID")
     private Delivery delivery;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     private LocalDateTime orderDate;    // DBA 분들이 원하는 테이블명 : ORDER_DATE, order_date

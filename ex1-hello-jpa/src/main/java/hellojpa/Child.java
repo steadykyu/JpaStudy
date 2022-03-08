@@ -1,17 +1,18 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-public class Team extends BaseEntity {
-
-    @Id @GeneratedValue
-    @Column(name = "TEAM_ID")
+public class Child {
+    @Id
+    @GeneratedValue
     private Long id;
+
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private Parent parent;
     public Long getId() {
         return id;
     }
@@ -28,5 +29,7 @@ public class Team extends BaseEntity {
         this.name = name;
     }
 
-    //members.toString()
+    public void setParent(Parent parent) {
+        this.parent = parent;
+    }
 }
