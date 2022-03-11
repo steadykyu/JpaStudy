@@ -19,15 +19,19 @@ public class JpaMain {
 
             em.persist(member);
 
-            member.getAddressHistory().add(new AddressEntity("old1","street","10000"));
-            member.getAddressHistory().add(new AddressEntity("old2","street","10000"));
 
+            Member findMember = em.find(Member.class, member.getId());
+            findMember.getAddressHistory().add(new AddressEntity("old1","street","10000"));
+            findMember.getAddressHistory().add(new AddressEntity("old2","street","10000"));
+
+            findMember.getAddressHistory().remove(new AddressEntity("old1","street","10000"));
+            findMember.getAddressHistory().add(new AddressEntity("new1","street","10000"));
             em.flush();
             em.clear();
 
             // ================================================값타입 수정
             System.out.println("===============START=========================");
-            Member findMember = em.find(Member.class, member.getId());
+
 
 
 
