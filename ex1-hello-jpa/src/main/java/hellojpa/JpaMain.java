@@ -1,14 +1,9 @@
 package hellojpa;
 
-import hellojpa.advanced_mapping.Movie;
-import org.hibernate.Hibernate;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.time.LocalDateTime;
-import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -18,27 +13,21 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try{
-            Child child1 = new Child();
-            Child child2 = new Child();
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setHomeAddress(new Address("homeCity","street","10000"));    // 생성자로 값 주입
 
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
+            em.persist(member);
 
-            em.persist(parent);
-//            em.persist(child1);
-//            em.persist(child2);
-
-
+            member.getAddressHistory().add(new AddressEntity("old1","street","10000"));
+            member.getAddressHistory().add(new AddressEntity("old2","street","10000"));
 
             em.flush();
             em.clear();
-            Parent findParent = em.find(Parent.class, parent.getId());
-            findParent.getChildList().remove(0);
-            // 컬렉션에서 사라진 child 하나가 지워진다.  H2에서 확인하면 Child row하나가 사라져있다.
 
-//            //=============q부모가 지워지면 전부지워진다. cascade = Remove와같다.
-//            em.remove(findParent);
+            // ================================================값타입 수정
+            System.out.println("===============START=========================");
+            Member findMember = em.find(Member.class, member.getId());
 
 
 
